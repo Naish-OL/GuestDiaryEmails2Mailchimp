@@ -38,8 +38,8 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/guestdiary-mailchimp-sync.git
-   cd guestdiary-mailchimp-sync
+   git clone https://github.com/Naish-OL/GuestDiaryEmails2Mailchimp
+   cd GuestDiaryEmails2Mailchimp
    ```
 
 2. **Install dependencies**
