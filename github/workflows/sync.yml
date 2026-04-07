@@ -1,0 +1,32 @@
+name: GuestDiary to Mailchimp Sync
+
+on:
+  schedule:
+    # Runs every day at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run sync script
+        env:
+          GUESTDIARY_API_URL: ${{ secrets.GUESTDIARY_API_URL }}
+          GUESTDIARY_API_KEY: ${{ secrets.GUESTDIARY_API_KEY }}
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          MAILCHIMP_SERVER_PREFIX: ${{ secrets.MAILCHIMP_SERVER_PREFIX }}
+          MAILCHIMP_AUDIENCE_ID: ${{ secrets.MAILCHIMP_AUDIENCE_ID }}
+          DAYS_BACK: ${{ vars.DAYS_BACK || '1' }}
+        run: python sync_guests.py
